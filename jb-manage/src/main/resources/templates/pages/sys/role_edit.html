@@ -1,0 +1,97 @@
+<!-- Horizontal Form -->
+ <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">添加角色</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form-horizontal">
+        <div class="box-body">
+          <div class="form-group">
+            <label for="nameId" class="col-sm-2 control-label">角色名称</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="name" id="nameId" placeholder="角色名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="noteId" class="col-sm-2 control-label">描述</label>
+
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="note" id="noteId" placeholder="描述">
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <button type="button" class="btn btn-default btn-cancel">取消</button>
+          <button type="button" class="btn btn-info pull-right btn-save">保存</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    </div>
+    <script type="text/javascript">
+
+    $(function(){
+        //异步加载，并初始化界面（数据回显）
+        doLoadInitRole();
+        
+        //绑定事件
+    	$(".box-footer")
+    	.on("click",".btn-save",doSaveOrUpdate)
+    	.on("click",".btn-cancel",doCancel);
+    	
+    });
+
+    //取消事件函数
+    function doCancel(){
+    	var url="role/role_list";
+    	$("#mainContentId")
+    	.load(url,function(){
+    	  $("#mainContentId").removeData();
+    	});
+    }
+    //保存或者更新事件函数
+    function doSaveOrUpdate(){
+    	//1.参数(表单数据)
+    	var params=doGetEditFormData();
+    	if(!params.name.trim()){
+    		alert("角色名不能为空");
+    		return;
+    	}
+    	var data=$("#mainContentId").data("data");
+    	if(data)params.id=data.id;
+    	//2.url
+    	var insertUrl="role/doSaveObject";
+    	var updateUrl="role/doUpdateObject";
+    	var url=data?updateUrl:insertUrl;
+    	//3.ajax request
+    	$.post(url,params,function(result){
+    		if(result.code==200){
+    		   alert(result.message);
+    		   doCancel();
+    		}else{
+    		   alert(result.message);
+    		}
+    	})
+    }
+    //获取（用户填写）表单信息
+    function doGetEditFormData(){
+    	//1.获取角色自身信息
+    	var params={
+    		name:$("#nameId").val(),
+    		note:$("#noteId").val()
+    	};
+    	return params;
+
+    }
+    //回显响应数据
+    function doLoadInitRole() {
+        //存在数据
+        var isExistData = $("#mainContentId").data("data");
+        if (isExistData){
+            $("#nameId").val(isExistData.name);
+            $("#noteId").val(isExistData.note);
+        }
+    }
+</script>

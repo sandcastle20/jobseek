@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SysUserMapper">
+
+    <sql id="searchAddition">
+        <where>
+            <if test="username !=null and username != '' ">
+                account like concat("%",#{username},"%")
+            </if>
+        </where>
+    </sql>
+
+    <select id="getRowCount" resultType="int">
+        select count(1)
+        from jb_sys_user
+        <include refid="searchAddition"></include>
+    </select>
+
+
+    <!--  基于userName与pageCurrent查询角色数据  -->
+    <select id="findPageObjects" resultType="cn.jobseek.vo.SysUser">
+        select id,account,name as role_name,email,mobile,valid,created_time,modified_time,created_user
+        from jb_sys_user
+        <include refid="searchAddition"></include>
+        order by created_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!--  插入用户数据  -->
+    <insert id="insertObject" parameterType="cn.jobseek.pojo.User">
+        <selectKey order="AFTER" keyProperty="id" resultType="long">
+            select last_insert_id();
+        </selectKey>
+        insert into jb_user
+        (account,pwd,salt,email,mobile,valid,created_time,modified_time,created_user)
+        values
+        (#{account},#{pwd},#{salt},#{email},#{mobile},
+            <if test="valid == true">
+                1
+            </if>
+            <if test="valid == false ">
+                0
+            </if>,
+        #{createdTime},#{modifiedTime},#{createdUser})
+    </insert>
+
+
+    <update id="updateObject" parameterType="cn.jobseek.pojo.User">
+        update jb_user
+        set account = #{account},mobile = #{mobile},email = #{email},modified_time = #{modifiedTime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteObject">
+
+        delete from jb_user
+        where 1=2
+        <if test="userId !=null">
+            or id =#{userId}
+        </if>
+    </delete>
+
+</mapper>

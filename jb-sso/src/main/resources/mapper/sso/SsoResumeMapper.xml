@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SsoResumeMapper">
+    <update id="updateResumeUrl" parameterType="cn.jobseek.pojo.Resume">
+        update jb_resume
+        set  resume_url = #{resumeUrl},
+        resume_name = #{resumeName},
+        modified_time = #{modifiedTime}
+        where employee_id = #{employeeId}
+    </update>
+
+    <insert id="insertResume" parameterType="cn.jobseek.pojo.Resume">
+        insert into jb_resume
+        (employee_id,resume_url,resume_name,created_time,modified_time,created_user)
+        values  (#{employeeId},#{resumeUrl},#{resumeName},#{createdTime},#{modifiedTime},#{createdUser})
+    </insert>
+</mapper>

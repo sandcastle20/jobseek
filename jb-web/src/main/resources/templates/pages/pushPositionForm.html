@@ -1,0 +1,170 @@
+
+
+<div class="modal-header">
+    <h5 class="modal-title" id="fullContactWayLongTitle">发布职位</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body ml-5" >
+    <!-- 发布职位 表单 -->
+    <div class="mx-auto" id="emp-id">
+        <form>
+            <label style="color: #0a859c;text-align: center">-------------------------------------请填写<strong>发布人</strong>信息-------------------------------------</label>
+            <div class="form-group">
+                <label for="pubNameId" class="col-sm-2 control-label">发布人姓名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="pubName" id="pubNameId" placeholder="请输入发布人姓名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="deptNameId" class="col-sm-2 control-label">所属部门</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="deptName" id="deptNameId" placeholder="请输入发布人所属部门">
+                </div>
+            </div>
+        </form>
+
+        <form>
+            <label style="color: #0a859c;text-align: center">-------------------------------------请填写<strong>职位</strong>信息-------------------------------------</label>
+            <div class="form-group">
+                <label for="positionNameId" class="col-sm-2 control-label">职位名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="positionName" id="positionNameId" placeholder="请输入职位名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="salaryId" class="col-sm-2 control-label">月薪</label>
+                <div class="col-sm-10">
+                    <select class="form-control " name="salary" id="salaryId">
+                        <option>1-3000</option>
+                        <option>3001-4000</option>
+                        <option>4001-5000</option>
+                        <option>5001-6000</option>
+                        <option>6001-7000</option>
+                        <option>7001-8000</option>
+                        <option>8001-9000</option>
+                        <option>9001-10000</option>
+                        <option>10001-20000</option>
+                        <option>90001-99999</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="addressId" class="col-sm-2 control-label">工作地址</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" id="addressId" placeholder="请输入工作地址">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dutyId" class="col-sm-2 control-label">工作职责</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="dutyId" name="duty" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label for="demandingId" class="col-sm-2 control-label">岗位要求</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="demandingId" name="demanding" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="welfareId" class="col-sm-2 control-label">薪资福利</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="welfareId" name="welfare" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="workTimeId" class="col-sm-2 control-label">工作时间</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control"  id="workTimeId" name="workTime" rows="6"></textarea>
+                </div>
+            </div>
+        </form>
+    <!-- 发布职位 表单 end -->
+</div>
+<div class="modal-footer d-flex justify-content-around">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary btn-save-pushPosition">保存</button>
+</div>
+    <script src="../summernote-0.8.16-dist/summernote.js"></script>
+    <script src="../summernote-0.8.16-dist/lang/summernote-zh-CN.js"></script>
+<script>
+    $(function () {
+        $(".btn-save-pushPosition").click(doSavePositon);
+        $("#dutyId").summernote({
+            height:150, //高度
+            minHeight:null, //最小高度
+            maxHeight:null, //最大高度
+            focus:false, //是否获取焦点
+            lang:'zh-CN' //中文
+        })
+        $("#demandingId").summernote({
+            height:150, //高度
+            minHeight:null, //最小高度
+            maxHeight:null, //最大高度
+            focus:false, //是否获取焦点
+            lang:'zh-CN' //中文
+        });
+        $("#welfareId").summernote({
+            height:150, //高度
+            minHeight:null, //最小高度
+            maxHeight:null, //最大高度
+            focus:false, //是否获取焦点
+            lang:'zh-CN' //中文
+        });
+        $("#workTimeId").summernote({
+            height:150, //高度
+            minHeight:null, //最小高度
+            maxHeight:null, //最大高度
+            focus:false, //是否获取焦点
+            lang:'zh-CN' //中文
+        });
+    })
+    //保存职位
+    function doSavePositon() {
+        if (!$.cookie("JB_TOKEN")){
+            alert("对不起，您暂时不能发布职位,请重新登录");
+            location.href="signup";
+        }
+        //1.获取表单数据
+        let params = doGetPushPositionFormData();
+        let compId = $("#logout").data("compId");
+        if (!compId){
+            alert("企业身份不存在,请重新登录")
+            location.href="signup";
+        }
+        params["compId"]= compId;
+        //2.ajax
+        $.post("company/doPushPosition",params,function (result) {
+          if (result.code== 200){
+              alert(result.message);
+              location.href="company";
+          }else {
+              alert(result.message);
+          }
+        })
+    }
+
+    //获取发布职位的表单数据
+    function doGetPushPositionFormData() {
+        let params = {
+            pubName:$("#pubNameId").val(),
+            deptName:$("#deptNameId").val(),
+            positionName:$("#positionNameId").val(),
+            salary:$("#salaryId").val(),
+            address:$("#addressId").val(),
+            duty:$("#dutyId").val().replaceAll("\"","'"),
+            demanding:$("#demandingId").val().replaceAll("\"","'"),
+            welfare:$("#welfareId").val().replaceAll("\"","'"),
+            workTime:$("#workTimeId").val().replaceAll("\"","'")
+        }
+        return params;
+    }
+
+    //创建replaceAll()函数
+    String.prototype.replaceAll = function (FindText, RepText) {
+        return this.replace(new RegExp(FindText, "g"), RepText);
+    };
+
+</script>

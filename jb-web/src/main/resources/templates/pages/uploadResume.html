@@ -1,0 +1,66 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="makeResumeModalLongTitle">制作简历</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <!-- 上传简历 -->
+    <form enctype="multipart/form-data" id="uploadResumeForm">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="inputResume" onchange="loadResumeFile(this.files[0])">
+            <label class="custom-file-label custom-resume" for="inputResume">上传简历</label>
+        </div>
+    </form>
+    <!-- 上传简历 end -->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary btn-upload-resume">上传</button>
+</div>
+<script>
+    $(function () {
+        $(".btn-upload-resume").click(doUploadResume);
+    })
+
+    function doUploadResume() {
+        let resume = $('#inputResume')[0].files[0];
+        if (!resume)alert("您没有选择简历文件，请选择")
+        let formData = new FormData($("#uploadResumeForm")[0])  //创建一个formData
+        formData.append('uploadResume', resume) //把file添加进去  name命名为img
+        $.ajax({
+            url: "/file/resume?rand=" + Math.random(),
+            data: formData,
+            type: "POST",
+            async: false,//同步
+            cache: false,
+            contentType: false,// 不处理数据
+            processData: false,// 不设置内容类型
+            success: function(result) {
+                //成功
+                alert(result.message);
+                location.href="me";
+            },
+            error: function(result) {
+                //失败
+                alert(result.message);
+            }
+        })
+    }
+    
+    function loadResumeFile(file) {
+        let fileName = file.name;
+        let dot = fileName.lastIndexOf(".");
+        let exc = fileName.substr(dot+1);
+        if(isAssetTypeAnResume(exc)){
+            $(".custom-resume").html(fileName);
+        }else {
+            alert("该类型不是文档类型(doc,pdf,docx,wps)，请重新上传");
+        }
+    }
+
+    //是否后缀为简历类型
+    function isAssetTypeAnResume(exc) {
+        return['doc', 'pdf', 'docx', 'wps'].indexOf(exc.toLowerCase())!=-1;
+    }
+</script>

@@ -1,0 +1,194 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<div class="box-title with-border">
+		<h4 class="box-title register_title">您好，企业。欢迎您的注册！</h4>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="accountId" class="col-sm-2 control-label">账号(必填)</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="account" id="accountId" placeholder="请输入用户名">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="PwdId" class="col-sm-2 control-label">密码(必填)</label>
+				提示：至少输入6位密码
+					<div class="col-sm-10">
+						<input type="password" class="form-control" name="pwd" id="pwdId" placeholder="新密码">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="cfgPwdId" class="col-sm-2 control-label">密码确认(必填)</label>
+					提示：至少输入6位密码
+					<div class="col-sm-10">
+					<input type="password" class="form-control" name="cfgPwd" id="cfgPwdId" placeholder="密码确认">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="emailId" class="col-sm-2 control-label">邮箱</label>
+				<div class="col-sm-10">
+					<input type="email" class="form-control" name="email" id="emailId" placeholder="请输入邮箱">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="phoneId" class="col-sm-2 control-label">联系方式</label>
+				提示：座机号021-56897777或者11位手机号
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="phone" id="phoneId" placeholder="请输入联系方式">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="companyNameId" class="col-sm-2 control-label">企业名字</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="companyName" id="companyNameId" placeholder="请输入企业名字">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="locationId" class="col-sm-2 control-label">所在地</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="location" id="locationId" placeholder="请输入所在地">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="scaleId" class="col-sm-2 control-label">员工规模</label>
+				<div class="col-sm-10">
+					<select class="form-control " name="scale" id="scaleId">
+						<option>0-500</option>
+						<option>501-1000</option>
+						<option>1001-5000</option>
+						<option>5001-9999</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="tipId" class="col-sm-2 control-label">公司简介</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" id="tipId" name="tip" rows="3"></textarea>
+				</div>
+			</div>
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer">
+			<button type="button" class="btn btn-outline-primary btn-cancel">取消</button>
+			<button type="button" class="btn btn-info pull-right btn-save">注册</button>
+		</div>
+		<!-- /.box-footer -->
+	</form>
+
+</div>
+<script>
+
+	$(function () {
+		$(".btn-save").click(doSaveCompany);
+		$(".btn-cancel").click(doCancel);
+	});
+	//取消
+	function doCancel() {
+		$("#register_content").removeData("roleId")
+		location.href="signup";
+	}
+	//保存
+	function doSaveCompany() {
+		//获取表单数据
+		var param = doGetFormData();
+		//获取角色id
+		var roleId =$("#register_content").data("roleId");
+		if (!roleId){
+			alert("请选择对应的角色->求职者or企业")
+		}
+		param["roleId"] = roleId;
+
+		//发送异步请求
+		var url = "user/doRegisterCompany";
+		$.post(url,param,function (result) {
+			if (result.isok=true){	//发送成功
+				alert(result.message);
+				location.href="signup";
+			} else {
+				alert(result.message);
+			}
+		})
+	}
+
+	//获取表单数据
+	function doGetFormData() {
+		var param={
+			account:$("#accountId").val(),
+			pwd:$("#pwdId").val(),
+			cfgPwd:$("#cfgPwdId").val(),
+			email:$("#emailId").val(),
+			mobile:$("#phoneId").val(),
+			companyName:$("#companyNameId").val(),
+			location:$("#locationId").val(),
+			scale:$("#scaleId").val(),
+			tip:$("#tipId").val()
+		}
+		console.log(param);
+		//验证表单
+		if (!doValidFormData(param)) return;
+		return param;
+
+	}
+
+	//验证表单
+	function doValidFormData(params) {
+		//1.验证acount
+		if (params.account == "") {
+			alert("您的账号为空");
+			return false;
+		}
+		//2.验证pwd
+		if (params.pwd == ""){
+			alert("您的密码为空");
+			return false;
+		}
+		//3.验证cfgPwd
+		if (params.cfgPwd == "") {
+			alert("您的确认密码为空");
+			return false;
+		} else if(params.cfgPwd.length<6){
+			alert("您至少要输入6位密码");
+			return false;
+		}else if (params.cfgPwd!=params.pwd) { //4.密码不对
+			alert("您前后两次的密码不正确");
+			return false;
+		}
+		//5.邮箱验证
+		if (params.email==""){
+			alert("您的邮箱为空");
+			return false;
+		}else if (params.email!=""){
+			var emailReg =new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+			if (!emailReg.test(params.email)){
+				alert("你输入的邮箱格式不正确");
+				return false;
+			}
+		}
+		//6.手机验证
+		if (params.mobile==""){
+			alert("你的手机号为空");
+			return false;
+		}
+		else if (params.mobile!=""){
+			var phoneReg =new RegExp("^(0\\d{2,3}-\\d{7,8})|(1\\d{10})$");
+			if (!phoneReg.test(params.mobile)){
+				alert("你输入的手机格式不正确");
+				return false;
+			}
+		}
+		//7.验证姓名
+		if (params.companyName=="") {
+			alert("你的单位姓名为空");
+			return false;
+		}
+		//8.所在地验证
+		if (params.tip=="") {
+			alert("你的简介为空");
+			return false;
+		}
+		return true;
+	}
+</script>

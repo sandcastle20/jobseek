@@ -1,0 +1,207 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="fullMeInfoModalLongTitle">完善个人信息</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body ml-5" >
+    <!-- me 个人信息 表单 -->
+    <div class="mx-auto" id="emp-id">
+        <div class="form-group">
+            <label for="userNameId" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="userName" id="userNameId" placeholder="请输入真实姓名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sexId" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-10">
+                <select class="form-control " name="sex" id="sexId">
+                    <option>男</option>
+                    <option>女</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birthdayId" class="col-sm-2 control-label">生日</label>
+            <div class="col-sm-10">
+                <input type="text" id="birthdayId" class="form-control" name="birthday"  placeholder="请选择日期">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="schoolId" class="col-sm-2 control-label">就读学校</label>
+            <div class="col-sm-10">
+                <input type="text" id="schoolId" class="form-control" name="school"  placeholder="请输入您就读的学校">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="majorId" class="col-sm-2 control-label">专业</label>
+            <div class="col-sm-10">
+                <input type="text" id="majorId" class="form-control" name="major"  placeholder="请输入您主修的专业">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="salaryId" class="col-sm-2 control-label">期望薪资</label>
+            <div class="col-sm-10">
+                <select class="form-control " name="salary" id="salaryId">
+                    <option>1-3000</option>
+                    <option>3001-4000</option>
+                    <option>4001-5000</option>
+                    <option>5001-6000</option>
+                    <option>6001-7000</option>
+                    <option>7001-8000</option>
+                    <option>8001-9000</option>
+                    <option>9001-10000</option>
+                    <option>10001-20000</option>
+                    <option>90001-99999</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tipId" class="col-sm-2 control-label">自我简介</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="tipId" name="tip" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- me 个人信息 表单 end -->
+</div>
+<div class="modal-footer d-flex justify-content-around">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary btn-update-emp">保存</button>
+</div>
+<script src="js/moment-with-locales.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $(function () {
+        //时间插件
+        $("#birthdayId").datetimepicker({
+            language: 'zh-CN',//显示中文
+            format: 'yyyy-mm-dd',//显示格式
+            minView: "month",//设置只显示到月份
+            initialDate: new Date(),
+            todayBtn: true,//显示今日按钮
+            autoclose: true,//选中自动关闭
+            locale:moment.locale
+        });
+
+        //调用模态框
+        $("#fullMeInfo").on('show.bs.modal', doInitMeInfoData);
+
+        //更新求职者数据
+        $(".btn-update-emp").click(doUpdateEmp)
+    })
+
+    //初始化表单
+    function doInitMeInfoData() {
+        let token = getEmpToken();
+        let url = "employee/doFindEmployee";
+        let param = {"token":token};
+        $.getJSON(url,param,function (result){
+            if (result.code==200){
+                InitFormData(result.data);
+            } else {
+                alert(result.message);
+                location.href="signup";
+            }
+        })
+
+    }
+
+    //获取用户令牌
+    function getEmpToken() {
+        let token = $.cookie("JB_TOKEN");
+        if (!token) {
+            alert("请重新登录，若仍然无效，请联系管理员");
+            location.href = "signup";
+        }
+        return token;
+    }
+
+    //根据求职者id回显姓名
+    function InitFormData(item) {
+        //1.绑定id
+        $("#emp-id").data("empId",item.id);
+        //2.填值
+        $("#userNameId").val(item.userName);
+        $("#sexId").val(item.sex?"男":"女");
+        $("#birthdayId").val(dateFormat("YYYY-mm-dd",new Date(item.birthday)));
+        $("#schoolId").val(item.school);
+        $("#majorId").val(item.major);
+        $("#salaryId").val(item.salary);
+        $("#tipId").val(item.tip);
+    }
+
+    //格式化时间
+    function dateFormat(fmt, date) {
+        let ret;
+        const opt = {
+            "Y+": date.getFullYear().toString(),        // 年
+            "m+": (date.getMonth() + 1).toString(),     // 月
+            "d+": date.getDate().toString(),            // 日
+            "H+": date.getHours().toString(),           // 时
+            "M+": date.getMinutes().toString(),         // 分
+            "S+": date.getSeconds().toString()          // 秒
+            // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (let k in opt) {
+            ret = new RegExp("(" + k + ")").exec(fmt);
+            if (ret) {
+                fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+            };
+        };
+        return fmt;
+    }
+
+    //更新求职责
+    function doUpdateEmp() {
+        //1.获取表单数据
+        let emp = getFormDate();
+        //2.定义url,param
+        let url = "employee/doUpdateEmployee";
+        let params = emp;
+        // params['token'] = getEmpToken();
+        //3.发送ajax
+        $.post(url,params,function (result) {
+            if (result.code=200){
+                alert(result.message);
+                $("#emp-id").removeData("empId");
+                location.href="me";
+            }else {
+                alert(result.message);
+            }
+        })
+    }
+
+    //获取填写的表单数据
+    function getFormDate() {
+        let empId = $("#emp-id").data("empId");
+        if (!empId) {
+            alert("未能获取empId");
+            return ;
+        }
+        let emp = {
+            id : empId,
+            userName : $("#userNameId").val(),
+            sex : ($("#sexId").val()=="男")?1:0,
+            birthday : getDate($("#birthdayId").val()),
+            school : $("#schoolId").val(),
+            major : $("#majorId").val(),
+            salary : $("#salaryId").val(),
+            tip : $("#tipId").val()
+        }
+        return emp;
+    }
+
+    //字符串转日期格式，strDate要转为日期格式的字符串
+    function getDate(strDate) {
+        var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/,
+            function(a) {
+                return parseInt(a, 10) - 1;
+            }).match(/\d+/g) + ')');
+        console.log(date)
+        return date;
+    }
+
+</script>

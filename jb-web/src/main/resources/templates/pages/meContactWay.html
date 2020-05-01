@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="fullContactWayLongTitle">完善联系方式</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <!-- 联系方式表单 -->
+    <form>
+        <div class="form-group">
+            <label for="emailId" class="col-sm-2 control-label">邮件</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="email" id="emailId" placeholder="请输入您的邮件">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="mobileId" class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="mobile" id="mobileId" placeholder="请输入您的邮件">
+            </div>
+        </div>
+    </form>
+    <!-- 联系方式表单 end -->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary btn-cw-save">保存</button>
+</div>
+<script>
+    $(function () {
+        //初始化联系方式表单
+        doInitMeContactWayForm();
+
+        //保存联系方式
+        $(".btn-cw-save").click(doSaveContactWayForm);
+    })
+
+
+    //初始化联系方式表单
+    function doInitMeContactWayForm() {
+        //判断token exist
+        var token = $.cookie("JB_TOKEN");
+        if (!token) {
+            alert("登录异常，请重新登录");
+            location.href="signup";
+        }
+        let url = "employee/doFindContactWay";
+        $.getJSON(url,token,function (result) {
+            if (result.code==200){
+                $("#emailId").val(result.data.email);
+                $("#mobileId").val(result.data.mobile);
+            }else {
+                alert(result.message);
+            }
+        })
+    }
+
+    //保存联系方式
+    function doSaveContactWayForm(){
+        //获取联系方式
+        var param = {
+            email:$("#emailId").val(),
+            mobile:$("#mobileId").val()
+        }
+        //ajax
+        $.post("employee/saveContactWay",param,function (result) {
+            if (result.code == 200){
+                alert(result.message);
+            } else {
+                alert(result.message);
+            }
+        })
+    }
+</script>
+

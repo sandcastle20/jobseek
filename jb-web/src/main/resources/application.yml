@@ -1,0 +1,30 @@
+#server
+server:
+  port: 8091
+  sevlet:
+    context-path: /
+  tomcat:
+    uri-encoding: utf8
+    max-thread: 1000
+    min-spare-threads: 100
+#spring
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/pages/
+    suffix: .html
+  mvc:
+    favicon:
+      enabled: false
+
+page.config:
+  pageSize: 10  #页面显示数
+#dubbo
+dubbo:
+  scan:     #dubbo注解生效
+    basePackages: cn.jobseek #包名
+  application:
+    name: consumer-jobseek  #消费者名
+  registry:
+    address: zookeeper://101.37.21.246:2181?backup=101.37.21.246:2182,101.37.21.246:2183
+

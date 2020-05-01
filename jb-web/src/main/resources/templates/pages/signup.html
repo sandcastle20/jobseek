@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<link rel="shortcut icon" href="#" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://at.alicdn.com/t/font_1714086_91wqp6b3w95.css" />
+		<title>signup</title>
+	</head>
+	<style>
+		body,ul,li{
+			padding: 0px;
+			margin: 0px;
+			list-style: none;
+		}
+
+		/* 背景色设置 */
+		.bg_color{
+			position: absolute;
+			width:100%;
+			height: 100%;
+			background: #0a859c;
+		}
+		/* 背景色设置结束 */
+		/* slogn style start */
+		.slogan{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		.slogan>section{
+			margin-top: 80px;
+			color: #fff;
+			letter-spacing: 1px;
+		}
+		.slogan>section:first-child{
+			font-size:2.5em;
+			/* margin-bottom: 25px; */
+		}
+		.slogan>section:last-child{
+			font-size: 2em;
+		}
+		/* slogn style end */
+		/* form style start */
+		.option{
+			width:500px;
+			height: 350px;
+			margin: 0px auto;
+			margin-top: 30px;
+			background: #edf0f3;
+            /*border: 1px solid red;*/
+			box-shadow: 0px 0px 3px #ccc;
+		}
+		.option>form>section{
+			margin: 0px 20px 0px ;
+			padding: 40px 0px;
+		}
+		.option>form>section>.form-group>label{
+			font-size: 18px
+		}
+        .option>section{
+            padding: 0px 20px 0px;
+        }
+		.btn-submit{
+			background-color: #0073b1;
+			font-size: 18px;
+			color: #fff;
+
+		}
+		.btn-submit:hover{
+			background-color: #006097;
+			color: #fff;
+		}
+		.option>article{
+			text-align: center;
+			margin-top: 20px;
+
+		}
+		.option>article>a{
+			text-decoration: none;
+		}
+		/* form style end */
+		/* footer style start */
+		footer{
+			width: 100%;
+			height: 35px;
+			position:fixed;
+			bottom: 0px;
+			/* border: 1px solid red; */
+			background: #fff;
+			box-shadow: 0px 0px 5px #ccc;
+		}
+		footer>nav{
+			width: 1200px;
+			margin: 0px auto;
+		}
+		footer>nav>ul{
+			display: flex;
+			justify-content: space-around;
+		}
+
+		
+		footer>nav>ul>li>span:first-child,
+		footer>nav>ul>li>span:nth-child(2),
+		footer>nav>ul>li>a{
+			line-height: 35px;
+			font-size: 14px;
+		}
+		footer>nav>ul>li>span:first-child,
+		footer>nav>ul>li>span:nth-child(2){
+			color: #000;
+			font-family: "微软雅黑";
+		}
+		footer>nav>ul>li>span:first-child>span{
+			background-color: #0a859c;
+			padding: 2px 3px;
+			border-radius: 5px ;
+			color: #fff;
+			font-weight: bold;
+		}
+		footer>nav>ul>li>a{
+			/* border: 1px solid red; */
+			color: #0A859C;
+			text-decoration: none;
+		}
+		
+		
+		@media screen and (min-width:750px) and (max-width:1200px) {
+			footer>nav{
+				width: 750px;
+				margin: 0px auto;
+			}
+		}
+		@media screen and (min-width:420px) and (max-width:750px){
+			footer>nav{
+				width: 420px;
+				margin: 0px auto;
+			}
+			footer>nav>ul>li:nth-child(4),
+			footer>nav>ul>li:nth-child(5),
+			footer>nav>ul>li:nth-child(6),
+			footer>nav>ul>li:nth-child(7){
+				display: none;
+			}
+		}
+	</style>
+	<body>
+		<section class="bg_color">
+			<section>
+				<section class="slogan">
+					<section>JobSeek</section>
+					<section>成就职业人生</section>
+				</section>
+                <section class="option">
+                    <form class="form-horizontal">
+                        <section>
+                            <div class="form-group">
+                                <i class="iconfont icon-zhanghao"></i>
+                                <label for="accountId">账号</label>
+                                <input type="text" name="account" id="accountId" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <i class="iconfont icon-mima"></i>
+                                <label for="pwdId">密码</label>
+                                <input type="password" name="pwd" id="pwdId" class="form-control"/>
+                            </div>
+                        </section>
+                    </form>
+                    <section>
+                        <button type="submit" class="btn  btn-block btn-submit" id="btn-submit">登录</button>
+                    </section>
+                    <article>
+                        <label>还没有账号?</label>
+                        <a href="register">注册</a>
+                        <a href="#">忘记密码</a>
+                    </article>
+                </section>
+
+
+			</section>
+			
+		</section>
+		<!-- 底部区域 -->
+		<footer>
+			<nav>
+				<ul>
+					<li><span><span>Job</span>seek&nbsp;©2020</span></li>
+					<li><span>Alpha</span></li>
+					<li><a href="job.html">主页</a></li>
+					<li><a href="#">关于</a></li>
+					<li><a href="#">用户协议</a></li>
+					<li><a href="#">隐私政策</a></li>
+					<li><a href="#">Cookie政策</a></li>
+					<li><a href="#">版权政策</a></li>
+					<li><a href="#">语言<i></i></a></li>
+				</ul>
+			</nav>
+		</footer>
+
+		
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/cookie-with-js.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+		<script>
+			$(function () {
+				$("#btn-submit").click(doLogin);
+			});
+
+			//登录
+			function doLogin() {
+			    var url = "user/doLogin?r="+Math.random();
+				var params = {
+					account: $("#accountId").val(),
+					pwd: $("#pwdId").val()
+				};
+                $.post(url,params,function (result) {
+                    if (result.code=200){	//发送成功
+                        alert(result.message);
+                        location.href="job";
+                    } else {
+                        alert(result.message);
+                    }
+                })
+
+			}
+		</script>
+	</body>
+
+</html>

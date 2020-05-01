@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SysPositionMapper">
+
+    <!--获取总记录数-->
+    <select id="getRowCount" resultType="int">
+        select count(1) from jb_sys_job
+        <where>
+            <if test=" positionName !=null and positionName  != '' ">
+                position_name like concat("%",#{positionName},"%")
+            </if>
+        </where>
+    </select>
+
+    <!--获取每一页的记录数-->
+    <select id="getPageObject" resultType="cn.jobseek.vo.SysPosition">
+        select * from jb_sys_job
+        <where>
+            <if test=" positionName !=null and positionName  != '' ">
+                position_name like concat("%",#{positionName},"%")
+            </if>
+        </where>
+        order by id desc
+        limit #{startIndex},#{pageSize}
+    </select>
+    <!--审核职位:修改-->
+    <update id="checkObjects">
+        update jb_position set check_status = 1
+        <include refid="CheckAdditon"></include>
+    </update>
+
+    <!--  记录审核时间-->
+    <update id="saveCheckTime">
+        update jb_position set check_time = #{checkTime}
+        <include refid="CheckAdditon"></include>
+    </update>
+
+
+    <sql id="CheckAdditon">
+        where 1=2
+        <if test="ids!=null and ids.length>0">
+            or
+            <foreach collection="ids" open="(" close=")" separator="or" item="id">
+                id=#{id}
+            </foreach>
+        </if>
+    </sql>
+</mapper>

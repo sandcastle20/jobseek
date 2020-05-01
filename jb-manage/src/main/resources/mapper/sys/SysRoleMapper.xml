@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SysRoleMapper">
+
+    <sql id="searchAddition">
+        <where>
+            <if test="roleName !=null and roleName != '' ">
+                name like concat("%",#{roleName},"%")
+            </if>
+        </where>
+    </sql>
+
+    <select id="getRowCount" resultType="int">
+        select count(1)
+        from jb_role
+        <include refid="searchAddition"></include>
+    </select>
+
+
+    <!--  基于roleName与pageCurrent查询角色数据  -->
+    <select id="doFindObjects" resultType="cn.jobseek.pojo.SysRole">
+        select id,name,note,created_time,modified_time,created_user
+        from jb_role
+        <include refid="searchAddition"></include>
+        order by created_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 保存角色信息   -->
+    <insert id="saveObjects" parameterType="cn.jobseek.pojo.SysRole"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+            jb_role(name,note,created_time,modified_time,created_user)
+        values
+        (#{name},#{note},#{createdTime},#{modifiedTime},#{createdUser})
+    </insert>
+
+    <!--更新角色信息-->
+    <update id="updateObject" parameterType="cn.jobseek.pojo.SysRole">
+        update jb_role
+        set name = #{name},
+            note = #{note},
+            modified_time = now()
+        where id = #{id}
+    </update>
+
+    <!--根据id删除角色记录-->
+    <delete id="deleteObject">
+        delete from jb_role
+        where 1=2
+        <if test="id != null ">
+            or id = #{id}
+        </if>
+    </delete>
+</mapper>

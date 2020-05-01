@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SsoWebJobDetailMapper">
+    <sql id="pnameAndpAdress">
+        FROM jb_web_job_detail
+        <where>
+            <if test="positionName !=null and positionName != ''">
+                position_name LIKE contact('%',#{positionName},'%')
+            </if>
+
+            <if test="address !=null and address != ''">
+                and address LIKE contact('%',#{address},'%')
+            </if>
+        </where>
+
+        ORDER BY created_time DESC
+        LIMIT #{startIndex},#{pageSize}
+    </sql>
+
+    <select id="getIndexPositionItem" resultType="int">
+        SELECT count(1) from(
+            select *
+            <include refid="pnameAndpAdress"></include>
+        ) as t
+    </select>
+
+    <select id="findIndexPositionItem" resultMap="IndexPositionItem">
+        select *
+        <include refid="pnameAndpAdress"></include>
+    </select>
+
+    <resultMap id="IndexPositionItem" type="cn.jobseek.vo.IndexPositionItem">
+        <id column="id" property="id"/>
+        <result column="avatar" property="avatar"/>
+        <result column="position_name" property="positionName"/>
+        <result column="company_name" property="companyName"/>
+        <result column="address" property="address"/>
+        <result column="created_time" property="createdTime"/>
+    </resultMap>
+
+
+
+</mapper>

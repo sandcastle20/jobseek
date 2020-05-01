@@ -1,0 +1,36 @@
+#server
+server:
+  port: 8090
+  sevlet:
+    context-path: /
+  tomcat:
+    uri-encoding: utf8
+    max-thread: 1000
+    min-spare-threads: 100
+#spring
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-bp1por7x2te03wa807o.mysql.rds.aliyuncs.com:3306/jobseek?serverTimezone=GMT%2B8&characterEncoding=utf8
+    username: sandcastle
+    password: scq08123xe@
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/pages/
+    suffix: .html
+#mybatis
+mybatis:
+  configuration:
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+  mapper-locations:
+    - classpath:/mapper/*/*.xml
+#LOG
+logging:
+  level:
+    cn.jobseek: DEBUG
+#  file:
+#    path: E:/framework/TCGBIIIWORKSTATION/jobseek
+#page
+page.config:
+  pageSize: 10  #单位页面记录数

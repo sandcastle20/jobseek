@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="fullContactWayLongTitle">完善联系方式</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <!-- 联系方式表单 -->
+    <form>
+        <div class="form-group">
+            <label for="emailId" class="col-sm-2 control-label">邮件</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="email" id="emailId" placeholder="请输入您的邮件">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="mobileId" class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="mobile" id="mobileId" placeholder="请输入您的邮件">
+            </div>
+        </div>
+    </form>
+    <!-- 联系方式表单 end -->
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary btn-cw-save">保存</button>
+</div>
+<script>
+    $(function () {
+        $("#getCompanyContactWay").on('show.bs.modal', doInitCompanyContactWayForm)
+
+        $(".btn-cw-save").click(doSaveCompanyContactWay)
+    })
+
+    //回显mobile和phone 利用token
+    function doInitCompanyContactWayForm() {
+        //判断cookie是否存在
+        if (!$.cookie("JB_TOKEN")){
+            alert("请重新登录")
+            location.href="signup";
+        }
+        //发送ajax
+        let url = "company/doFindCompanyContactWay"
+        $.getJSON(url,function (result) {
+            if (result.code==200){
+                $("#emailId").val(result.data.email);
+                $("#mobileId").val(result.data.mobile);
+            } else {
+                alert(result.message);
+            }
+        })
+    }
+
+    //保存公司联系方式
+    function doSaveCompanyContactWay() {
+        let params = getCompanyContactWayFormData();
+        let compId = $("#logout").data("compId");
+        if (!compId){
+            alert("系统错误，企业id不见了");
+            return;
+        }
+        params['companyId']=compId;
+        $.post("company/doSaveCompanyContactWay",params,function (result) {
+            if (result.code==200){
+                alert(result.message);
+                location.href="company";
+            } else {
+                alert(result.message);
+                location.href="company";
+            }
+        })
+
+
+
+    }
+
+    //获取公司联系方式表单数据
+    function getCompanyContactWayFormData() {
+        let params = {
+            email:$("#emailId").val(),
+            mobile:$("#mobileId").val()
+        }
+        return params;
+    }
+
+</script>
+
+

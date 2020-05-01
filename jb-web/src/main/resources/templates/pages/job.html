@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+        <link rel="shortcut icon" href="#" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://at.alicdn.com/t/font_1714086_91wqp6b3w95.css" />
+		<link rel="stylesheet" href="css/nav.css" />
+		<link rel="stylesheet" href="css/footer.css" />
+		<title>job</title>
+		<style>
+			a,ul,li{
+				text-decoration: none;
+				list-style: none;
+			}
+			body{
+				padding: 0px;
+				margin: 0px;
+				background-color: #f5f5f5;
+			}
+
+			/* banner style start */
+			#banner{
+				height: 320px;
+				/* border: 1px solid red; */
+			}
+			.carousel-item>img{
+				height: 320px;
+			}
+			/* banner style start */
+			/* search_bg style start */
+			#jb_search{
+				height: 255px ;
+			}
+			.jb_search{
+				width: 60%;
+				margin: 20px auto;
+				background: #fff;
+				border-radius: 5px;
+				box-shadow: 0px 0px 10px #ccc;
+				/* border: 1px solid black; */
+				
+			}
+			.jb_search>section:first-child{
+				height: 130px;
+				/* border: 1px solid blue; */
+				background: url(img/search_bg.svg);
+			}
+			.jb_search>section:first-child>section:first-child{
+				height: 60px;
+				text-align: center;
+				padding-top: 15px;
+				font-size: 1.30em;
+				/* border: 1px solid red; */
+			}
+			.jb_search>section:first-child>section:nth-child(2){
+				height: 70px;
+				/* border: 1px solid red; */
+			}
+			.jb_search_form>form>input{
+				width: 40%;
+			}
+			
+			.jb_search>section:nth-child(2){
+				height: 125px;
+				/* border: 1px solid blue; */
+			}
+			.jb_search>section:nth-child(2)>section:first-child{
+				/* border: 1px solid red; */
+				margin: 20px;
+			}
+			.jb_search>section:nth-child(2)>section:nth-child(2)>span{
+				margin-left: 20px;
+				padding: 5px 10px;
+				border: 1px solid #0A859C;
+				border-radius: 15px;
+			}
+			.jb_search>section:nth-child(2)>section:nth-child(2)>span>a{
+				color: #000;
+				text-decoration: none;
+			}
+			.jb_search>section:nth-child(2)>section:nth-child(2)>span:hover>a{
+				color: #0073B1;
+			}
+			
+			/* search_bg style end 252*276*/
+			#job_display{
+				margin-top: 45px;
+				height:  710px;
+				/* border: 1px solid red; */
+			}
+			/* job_display style start  */
+			.job_display{
+				
+				width: 60%;
+				height: 710px;
+				margin: 0px auto;;
+				background: #fff;
+				border-radius: 5px;
+				border: 1px solid #ccc;
+				box-shadow: 0px 0px 10px #ccc;
+			}
+			.job_display>section:first-child>div:first-child{
+				/* border: 1px solid red; */
+				margin: 20px;
+				font-size: 1.45em ;
+			}
+			.job_display>section:first-child>div:nth-child(2){
+				margin: 20px;
+				font-size: 17px;
+				letter-spacing: 2px;
+				/* border: 1px solid red; */
+			}
+			.job_item_group{
+				margin-top: 20px;
+				display: flex;
+				justify-content: space-around;
+			}
+			.job_item{
+				width: 22%;
+				height: 280px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+			}
+			.job_item:hover{
+				transform: translateY(-10px);
+				box-shadow: 2px 2px 3px #ccc;
+			}
+			.job_item>section:first-child{
+				width: 100%;
+				height: 100px;
+				position: relative;
+				/* border: 1px solid red; */
+			}
+			.job_item>section:first-child>img{
+				margin-left: 8px;
+				width: 100px;
+				height: 100px;
+				/* border: 1px solid #ccc; */
+				
+			}
+			.job_item>section:first-child>a{
+				color: #000;
+				text-decoration: none;
+			}
+			.job_item>section:first-child>a>i{
+				height: 15px;
+				position: absolute;
+				right: 15px;
+				top: 5px;
+				text-align: center;
+			}
+			.job_item>section:first-child>a>i:hover{
+				height: 25px;
+				width: 25px;
+				background-color: #ccc;
+				border-radius: 25px;
+				
+			}
+			.job_item>section:nth-child(2){
+				margin-left: 8px;
+				height:	120px ;
+				padding: 5px 0px;
+				display: flex;
+				flex-direction: column;
+				justify-items: left;
+			}
+			.job_item>section:nth-child(2)>article{
+				color: #0A859C;
+			}
+			.job_item>section:nth-child(2)>article:first-child{
+				color: #000;
+				font-weight: bold;
+			}
+			.job_item>section:last-child{
+				margin-left: 8px;
+				margin-top: -12px;
+				height: 60px;
+				display: flex;
+				flex-direction: column;
+				justify-items: left;
+				color: #0A859C;
+				/* border: 1px solid red; */
+			}
+			.job_item>section:last-child>article:first-child{
+				margin-bottom: 8px;
+			}
+			.job_item>section:last-child>article:first-child>i{
+				font-size: 1.25em;
+				font-weight: bolder;
+				color: green;
+			}
+			.job_item>section:last-child>article:first-child>a{
+				text-decoration: none;
+			}
+			.job_item>section:last-child>article:last-child{
+				width: 40px;
+				border-top: 1px solid #ccc;
+				padding-top:5px;
+				color: green;
+				font-size: 14px;
+				font-weight: bold;
+				
+			}
+			/* job_display style end  */
+
+			
+
+			/* footer style end */
+			/* 576px-768px媒体查询 */
+			@media screen and (max-width:768px) and (min-width:576px){
+				.icon-gengduo{
+					color: #fff;
+					font-size: 1.25em;
+				}
+				.job_search{
+					width: 85%;
+				}
+			}
+			/* iconfont style start*/
+			@font-face {
+			  font-family: 'iconfont';  /* project id 1714086 */
+			  src: url('//at.alicdn.com/t/font_1714086_hbayyuzogpu.eot');
+			  src: url('//at.alicdn.com/t/font_1714086_hbayyuzogpu.eot?#iefix') format('embedded-opentype'),
+			  url('//at.alicdn.com/t/font_1714086_hbayyuzogpu.woff2') format('woff2'),
+			  url('//at.alicdn.com/t/font_1714086_hbayyuzogpu.woff') format('woff'),
+			  url('//at.alicdn.com/t/font_1714086_hbayyuzogpu.ttf') format('truetype'),
+			  url('//at.alicdn.com/t/font_1714086_hbayyuzogpu.svg#iconfont') format('svg');
+			}
+			/* iconfont style start*/
+		</style>
+	</head>
+	<body>
+		<!-- nav -->
+		<header>
+			<nav class="navbar navbar-default ">
+				<div class="container-fluid" >
+					<section class="row ">
+						<!-- Job觅职 标题头 -->
+						<section class="col-lg-2 col-md-3 col-sm-4 ">
+							<div class="navbar-header">
+								<span>Job</span>觅职
+							</div>
+						</section>
+						<!-- 搜索框 -->
+						<section class="col-lg-4 col-md-3 col-sm-6 ">
+							<input type="text" class="form-control iconfont" placeholder="&#xe60b;搜索您关心的职位">
+						</section>
+						<!-- 主页 注册/登录 我 -->
+						<section class="col-lg-6 col-md-6 col-sm-2">
+							<ul class="nav jb_nav">
+								<li class="nav-item">
+									<a class="nav-link active" href="job.html">主页</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="signup.html">注册/登录</a>
+								</li>
+								<li class="nav-item">
+									<!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+									<a class="nav-link" href="me.html">我</a>
+								</li>
+								<li class="nav-item">
+									<!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+									<a class="nav-link" href="company.html">企业</a>
+								</li>
+								<li class="nav-item dropdown more_job_nav">
+								        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								          <i class="iconfont icon-gengduo"></i>
+								        </a>
+								        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								          <a class="dropdown-item" href="job.html">主页</a>
+								          <a class="dropdown-item" href="signup.html">注册/登录</a>
+								          <a class="dropdown-item" href="me.html">我</a>
+										  <a class="dropdown-item" href="company.html">企业</a>
+								        </div>
+								</li>
+							</ul>
+						</section>
+					</section>
+				</div>
+			</nav>
+		</header>
+		
+		<!-- fill_nav -->
+		<div class="fill_nav"></div>
+		
+		<!-- banner -->
+		<section id="banner">
+			<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+			  <ol class="carousel-indicators">
+			    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+			    <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+			    <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+				<li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+			  </ol>
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="img/招商积余3.jpg" class="d-block w-100" alt="#">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="img/北京百家互联科技有限公司首页广告.jpg" class="d-block w-100"alt="#">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="img/教育部.jpg" class="d-block w-100" alt="#">
+			    </div>
+				<div class="carousel-item">
+				  <img src="img/北京百家互联科技有限公司首页广告.jpg" class="d-block w-100" alt="#">
+				</div>
+			  </div>
+			  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+			</div>
+		</section>
+		
+		<!-- search  -->
+		<section id="jb_search">
+			<section class="jb_search">
+				<section>
+					<section>理想工作尽在JobSeek...</section>
+					<section class="jb_search_form">
+						<form class="form-inline ">
+							<input class="form-control-lg  m-md-2 ml-md-4 iconfont btn-searchByPName" type="search" placeholder="&#xe613;搜索你关心的职位" aria-label="Search">
+							<input class="form-control-lg  mr-md-2 iconfont btn-searchByPAddress" type="search" placeholder="&#xe614;搜索你想要工作的地点" aria-label="Search">
+							<button class="btn btn-outline-success my-2 ml-md-3 btn-search" type="submit">Search</button>
+						</form>
+					</section>
+				</section>
+				<section>
+					<section>职位推荐</section>
+					<section>
+						<span><a href="#">市场经理</a></span>
+						<span><a href="#">人事</a></span>
+						<span><a href="#">法律</a></span>
+						<span><a href="#">销售</a></span>
+						<span><a href="#">阿里巴巴</a></span>
+						<span><a href="#">大数据</a></span>
+						<span><a href="#">人工智能</a></span>
+					</section>
+				</section>
+			</section>
+		</section>
+
+		
+		<!-- job display -->
+		<section id="job_display">
+			<section class="job_display">
+				<section>
+					<div>职位推荐</div>
+					<div>根据您的职业档案为您推荐</div>
+				</section>
+				<section id="jobContent">
+					<section class="job_item_group">
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="jobDetail.html">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+					</section>
+					<section class="job_item_group">
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+						<section class="job_item">
+							<section>
+								<img src="img/0.png"/>
+								<a href="#"><i class="iconfont icon-gengduo"></i></a>
+							</section>
+							<section>
+								<article>糖尿病事业部-医药信息沟通代表-成都</article>
+								<article>Sanofi</article>
+								<article>Chengdu, CN</article>
+							</section>
+							<section>
+								<article>
+									<i class="iconfont icon-clock"></i><a href="#">抢先申请</a>
+								</article>
+								<article>新</article>
+							</section>
+						</section>
+					</section>
+				</section>
+			</section>
+		</section>
+
+		<!-- footer -->
+		<footer>
+			<section><span>Job</span>Seek</section>
+			<section>
+				<section class="jb_footer_list">
+					<ul>
+						<li><a href="#">关于</a></li>
+						<li><a href="#">招聘专版</a></li>
+						<li><a href="#">广告发布</a></li>
+						<li><a href="#">小型企业</a></li>
+					</ul>
+					<ul>
+						<li><a href="#">征才解决方案</a></li>
+						<li><a href="#">营销解决方案</a></li>
+						<li><a href="#">销售解决方案</a></li>
+						<li><a href="#">安全中心</a></li>
+					</ul>
+					<ul>
+						<li><a href="#">社区准则</a></li>
+						<li><a href="#">隐私政策和条款<i class="iconfont icon-icon-test"></i></a></li>
+						<li><a href="#">移动app</a></li>
+					</ul>
+					<ul>
+						<li>
+							<i class="iconfont icon-wenhao"></i><a href="#">需要咨询?</a>
+							<div>欢迎访问帮助中心</div>
+						</li>
+						<li>
+							<i class="iconfont icon-chilun"></i><a href="#">管理账号和隐私</a>
+							<div>前往设置</div>
+						</li>
+					</ul>												  
+				</section>
+				<section>
+						<section>选择语言</section>
+						<section>
+							<div class="btn-group">
+								<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									简体中文（简体中文）
+								</button>
+								<div class="dropdown-menu dropdown-menu-right">
+									<button class="dropdown-item" type="button">简体中文（简体中文）</button>
+								</div>
+							</div>
+						</section>
+				</section>		
+			</section>
+			<section>
+				JobSeek Alpha Version&emsp;&emsp;©2020 年
+			</section>
+		</footer>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/cookie-with-js.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+<script>
+	$(function () {
+		InitIndexUI();
+		//初始化首页展示的职位信息
+		$(".btn-search").click(doSearchJob);
+	})
+
+	//初始化页面
+	function InitIndexUI() {
+		doSearchJob();
+	}
+	//获取表单中数据
+	function getSearchFormData() {
+		let param = {
+			positionName: $(".btn-searchByPName").val(),
+			address: $(".btn-searchByPAddress").val()
+		}
+		return param;
+	}
+
+
+	//搜索职位
+	function doSearchJob() {
+		var param = getSearchFormData();
+		$.getJSON("/job/doFindIndexPositionItem",param,function (result) {
+			if (result.code == 200){
+				alert(result.message);
+				$("#jobContent").empty();
+			} else {
+				alert(result.message);
+			}
+		})
+		return false;	//防止刷新页面
+	}
+</script>
+	</body>
+</html>

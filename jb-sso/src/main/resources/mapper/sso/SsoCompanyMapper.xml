@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SsoCompanyMapper">
+
+    <insert id="saveCompanyObject" parameterType="cn.jobseek.pojo.Company">
+        insert into jb_company
+        (user_id,company_name,location,phone,email,scale,tip,created_time,modified_time,created_user)
+        values
+        (#{userId},#{companyName},#{location},#{phone},#{email},#{scale},#{tip},#{createdTime},#{modifiedTime},#{createdUser})
+    </insert>
+
+    <update id="updateCompany" parameterType="cn.jobseek.pojo.Company">
+        update jb_company
+        set company_name = #{companyName},location = #{location},scale = #{scale},tip =#{tip},modified_time=#{modifiedTime}
+        where id = #{id}
+    </update>
+
+    <update id="updateCompanyForPushPosition" parameterType="cn.jobseek.pojo.Company">
+        update jb_company
+        set pubperson_id = #{pubpersonId},position_id = #{positionId},modified_time = #{modifiedTime}
+        where id = #{id}
+    </update>
+
+<!--    <insert id="insertCompany" parameterType="cn.jobseek.pojo.Company">-->
+<!--        insert into jb_company-->
+<!--        (user_id,pubperson_id,position_id,company_name,location,phone,email,scale,tip,avatar,created_time,modified_time,created_user)-->
+<!--        values-->
+<!--        (#{userId},#{pubpersonId},#{positionId},#{companyName},#{location},#{phone},#{email},#{scale},#{tip},#{avatar},#{createdTime},#{modifiedTime},#{createdUser});-->
+<!--    </insert>-->
+</mapper>

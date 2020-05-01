@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>company</title>
+        <link rel="shortcut icon" href="#" />
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://at.alicdn.com/t/font_1714086_ente21sa4le.css" />
+		<link href="../summernote-0.8.16-dist/summernote.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/nav.css" />
+		<link rel="stylesheet" href="css/footer.css" />
+		<style>
+			a,ul,li{
+				text-decoration: none;
+				list-style: none;
+			}
+			body{
+				padding: 0px;
+				margin: 0px;
+				background-color: #f5f5f5;
+			}
+			/* company_function style start */
+			#company_function{
+				width: 100%;
+				background-color: #e1e9ee;
+			}
+			.company_function{
+				width: 60%;
+				margin: 0px auto;
+				height: 60px;
+				/* border: 1px solid red; */
+			}
+			.company_function>section:first-child{
+				display: flex;
+				align-items: center;
+				padding:10px 0px;
+			}
+			.company_function>section:first-child>section:first-child>article{
+				font-weight: bold;
+			}
+			.company_function>section:first-child>section:nth-child(2)>a{
+				padding-left: 20px;
+				padding-right: 10px;
+				border-left: 1px solid #ccc;
+				text-decoration: none;
+				color: #0073b1;
+			}
+			.company_function>section:first-child>section:last-child{
+				width: 35px;
+				margin-left: 20px;
+				font-size: 1.5em;
+				font-weight: bolder;
+				text-align: center;
+				/* border: 1px solid red; */
+			}
+			.company_function>section:first-child>section:last-child:hover{
+				background: #ccc;
+				cursor: pointer;
+			}
+			#bigger_company_function{
+				display: none;
+				height: 190px;
+				border: 1px solid #ccc;
+				background-color: #fff;
+			}
+			#bigger_company_function>article{
+				display: flex; 
+				justify-content: center;
+				/* border: 1px solid red; */
+			}
+			#bigger_company_function>article>section{
+				width: 34%;
+				height: 190px;
+				border: 1px solid #ccc;
+				display: flex;
+				flex-direction: column;
+				text-align: center;
+				justify-content: center;
+			}
+			#bigger_company_function>article>section>article:last-child{
+				display: none;
+			}
+			#bigger_company_function>article>section:hover{
+				transform: scale(1.15);
+				background-color: #fff;
+				box-shadow: 2px 2px 3px #ccc;
+			}
+			#bigger_company_function>article>section:hover>article:last-child{
+				display: block;
+			}
+			#bigger_company_function>article>section>article:first-child>i{
+				font-size:2.44em;
+				color: blue;
+			}
+			/* company_function style end */
+			/* company style start */
+			#aboutcompany{
+				width: 100%;
+				/* border: 1px solid red; */
+			}
+			.aboutcompany{
+				width: 60%;
+				height: 380px;
+				margin: 0px auto;
+				padding: 20px 0px;
+				display: flex;
+				/* border: 1px solid blue; */
+			}
+			/* leftside-aboutcompany start */
+			.aboutcompany>section:first-child{
+				width: 70%;
+				background-color: #fff;
+				margin-right: 20px;
+				box-shadow: 0px 0px 10px #ccc;
+				border: 1px solid #F5F5F5;
+				border-radius:5px;
+				/* border: 1px solid green; */
+				position: relative;
+				
+			}
+			.aboutcompany>section:first-child>section:first-child{
+				width: 100%;
+				height: 160px;
+				padding: 0px 20px;
+				background: url(img/bg_me.svg);
+				border-top: 1px solid #F5F5F5;
+				border-radius: 5px 5px 0px 0px;
+				position: relative;
+			}
+			.aboutcompany>section:first-child>section:first-child>a>div{
+				width: 150px;
+				height: 150px;
+				opacity: 0.8;
+				position: absolute;
+				border: 1px solid #fff;
+				box-shadow: 0px 0px 3px #f5f5f5;
+				border-radius: 100px;
+				background-color: #F5F5F5;
+				bottom: -75px;
+			}
+			.aboutcompany>section:first-child>section:first-child>a>div>i{
+				position: absolute;
+				top:35px;
+				left: 45px;
+				font-size: 3.25em;
+				font-weight: bold;
+				color: #005e93;
+				
+			}
+			.aboutcompany>section:first-child>section:nth-child(2){
+				/* border: 1px solid red; */
+				width: 400px;
+				margin-top: 85px;
+				margin-left: 20px;
+			}
+			.aboutcompany>section:first-child>section:nth-child(2)>article{
+				font-size: 18px;
+			}
+			.aboutcompany>section:first-child>section:nth-child(2)>article:first-child{
+				/* border: 1px solid red; */
+				padding-left: 35px;
+				font-size: 1.35em;
+				font-weight: bold;
+			}
+			.aboutcompany>section:first-child>section:nth-child(2)>article:nth-child(2)>span,
+			.aboutcompany>section:first-child>section:nth-child(2)>article:last-child>span{
+				padding:0px 5px;
+			}
+			.aboutcompany>section:first-child>section:nth-child(2)>article:last-child>span:last-child>a{
+				color: #005e93;
+				font-weight: bold;
+				text-decoration: none;
+			}
+			.aboutcompany>section:first-child>section:last-child{
+				/* border: 1px solid red; */
+				position: absolute;
+				top:70%;
+				left: 70%;
+			}
+			.aboutcompany>section:first-child>section:last-child>button{
+				width: 100%;
+				height: 60px;
+			}
+			/* leftside-aboutcompany end */
+			/* rightside-advers start */
+			.aboutcompany>section:last-child{
+				width: 30%;
+				height: 450px;
+				/* border: 10px solid black; */
+				
+			}
+			.aboutcompany>section:last-child>article{
+				margin-bottom: 15px;
+				display: flex;
+				justify-content: space-between;
+			}
+			.aboutcompany>section:last-child>article>article>a,
+			.aboutcompany>section:last-child>article>i{
+				color: #0073b1;
+				font-size: 17px;
+				font-weight: bold;
+			}
+			.aboutcompany>section:last-child>section{
+				display: flex;
+				justify-content: center;
+				border: 10px solid #fff;
+				overflow: hidden;
+				box-shadow: 0px 0px 3px #ccc;
+			}
+			.aboutcompany>section:last-child>section>img{
+				width: 100%;
+			}
+			/* rightside-advers end */
+			/* company style end */
+			/* aboutResume style start */
+			#aboutResume{
+				/* border: 1px solid red; */
+				width: 60%;
+				margin: 0px auto;
+			}
+			.aboutResume{
+				width: 69%;
+				border: 1px solid #f5f5f5;
+				background: #fff;
+				box-shadow: 0px 0px 5px #ccc;
+				border-radius: 5px;
+			}
+			.aboutResume>section{
+				height: 135px;
+				background-image: url(img/resume_todo.png);
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				border-radius: 5px;
+			}
+			.aboutResume>section>article{
+				padding-top: 25px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				/* border: 1px solid red; */
+			}
+			.aboutResume>section>article>article{
+				color: #fff;
+			}
+			.aboutResume>section>article>article:first-child{
+				font-size: 1.5em;
+			}
+			.aboutResume>section>article>article:last-child>button{
+				margin-top: 5px;
+				border: 1px solid #f5f5f5;
+				color: #fff;
+			}
+			.aboutResume>section>article>article:last-child>button:hover{
+				background-color: seagreen;
+			}
+			/* aboutResume style end */
+			/* myCollect&myResume style start */
+			.myContentBG{
+				/* margin-top: 20px; */
+				width: 100%;
+				/* border: 1px solid red; */
+			}
+			.myContent{
+				width: 60%;
+				/* height: 380px; */
+				margin: 0px auto;
+				padding-top: 20px;
+				display: flex;
+				/* border: 1px solid blue; */
+			}
+			/* 我的收藏&我的简历 */
+			.myContent>section{
+				width: 69%;
+				border: 1px solid #f5f5f5;
+				border-radius: 5px;
+				/* padding-bottom: 20px; */
+				background: #fff;
+				box-shadow: 0xp 0px 5px #ccc;
+			}
+			.myContent>section>section:first-child{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				/* border-bottom: 1px solid #ccc; */
+			}
+			.myContent>section>section:first-child>article:first-child{
+				padding: 10px 0px 5px 30px;
+				font-size: 20px;
+				font-weight: bold;
+			}
+
+			.myContent>section>section:first-child>i{
+				padding: 2px 4px 2px 4px;
+				margin-right: 5px;
+				font-weight: bolder;
+				/* border: 1px solid firebrick; */
+			}
+			.myContent>section>section:first-child>i:hover{
+				background:#f5f5f5;
+			}
+			/* 我的收藏&我的简历 end*/
+			
+			/* none 收藏内容&简历内容 */
+			.none_mycontent{
+				background-color: #f5f5f5;
+				/* border: 1px solid red; */
+				height: 250px;
+				border: 1px solid #f5f5f5;
+				box-shadow: 0px 0px 5px #ccc;
+				border-radius: 0px 0px 5px 5px;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				
+			}
+
+			.none_mycontent>article:first-child>img{
+				/* border: 1px solid red; */
+				width: 155px;
+			}
+			.none_mycontent>article:nth-child(2){
+				font-size: 20px;
+				font-weight: bold;
+			}
+			/* none 收藏内容&简历内容 end */
+			/* myCollect&myResume style end */
+			
+
+		</style>
+	</head>
+	<body>
+		<!--header-->
+		<header>
+			<nav class="navbar navbar-default ">
+				<div class="container-fluid" >
+					<section class="row ">
+						<!-- Job觅职 标题头 -->
+						<section class="col-lg-2 col-md-3 col-sm-4 ">
+							<div class="navbar-header">
+								<span>Job</span>觅职
+							</div>
+						</section>
+						<!-- 搜索框 -->
+						<section class="col-lg-4 col-md-3 col-sm-6 ">
+							<input type="text" class="form-control iconfont" placeholder="&#xe60b;搜索您关心的职位">
+						</section>
+						<!-- 主页 注册/登录 我 -->
+						<section class="col-lg-6 col-md-6 col-sm-2">
+							<ul class="nav jb_nav">
+								<li class="nav-item">
+									<a class="nav-link active" href="job.html">主页</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="signup.html">注册/登录</a>
+								</li>
+								<li class="nav-item">
+									<!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+									<a class="nav-link" href="me.html">我</a>
+								</li>
+								<li class="nav-item">
+									<!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+									<a class="nav-link" href="company.html">企业</a>
+								</li>
+								<li class="nav-item dropdown more_job_nav">
+								        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownmenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								          <i class="iconfont icon-gengduo"></i>
+								        </a>
+								        <div class="dropdown-menu" aria-labelledby="navbarDropdownmenuLink">
+								          <a class="dropdown-item" href="job.html">主页</a>
+								          <a class="dropdown-item" href="signup.html">注册/登录</a>
+										  <a class="dropdown-item" href="company.html">企业</a>
+								          <a class="dropdown-item" href="me.html">我</a>
+								        </div>
+								</li>
+							</ul>
+						</section>
+					</section>
+				</div>
+			</nav>
+		</header>
+		
+		<!-- fill_nav -->
+		<div class="fill_nav"></div>
+		
+		<!-- company function -->
+		<section id="company_function">
+			<section class="company_function">
+				<section>
+					<section>
+						<article id="click_bigger"><span class="companyName">xxx公司</span>，请完成这些步骤，让觅职助您一臂之力：</article>
+					</section>
+					<section>
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#addCompanyImage" >添加照片</a>
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#pushPosition">发布职位</a>
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#fullCompanyInfo">完善企业档案</a>
+						<a href="http://www.jb.com/user/logout.html" id="logout" style="display: none">退出登录</a>
+					</section>
+					<section id="function_icon">
+						<i class="iconfont icon-down"></i>
+					</section>
+				</section>
+				<section id="bigger_company_function" >
+					<article>
+						<section>
+							<article><i class="iconfont icon-icon-test3"></i></article>
+							<article>添加照片</article>
+							<article><p>添加头像，帮助您企业打开知名度。</p></article>
+							<article><button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCompanyImage">添加照片</button></article>
+						</section>
+						<section>
+							<article><i class="iconfont icon-gerenjianli"></i></article>
+							<article>发布职位</article>
+							<article><p>发布职位，助力您快速完成招聘任务。</p></article>
+							<article><button type="button" class="btn btn-success" data-toggle="modal" data-target="#pushPosition">发布职位</button></article>
+						</section>
+						<section>
+							<article><i class="iconfont icon-zhiyebingbaogaoshangbao"></i></article>	
+							<article>完善企业信息</article>
+							<article><p>拥有完整的职位，会让求职者心生向往。</p></article>
+							<article><button type="button" class="btn btn-success" data-toggle="modal" data-target="#fullCompanyInfo">完善企业档案</button></article>
+						</section>
+					</article>
+				</section>
+				
+			</section>
+			
+		</section>
+		
+		<!-- company -->
+		<section id="aboutcompany">
+			<section class="aboutcompany">
+				
+				<!-- leftside aboutcompany-->
+				<section>
+					<section>
+						<a href="#" data-toggle="modal" data-target="#addCompanyImage"><div class="avatar"><i class="iconfont icon-icon-test3"></i></div></a>
+					</section>
+					<section>
+						<article class="companyName">Game Frank</article>
+						<article><span class="companyScale">0-500</span>位员工&emsp;企业</article>
+						<article>
+							<span>中国</span><span class="location">上海</span>&nbsp;·&nbsp;
+							<span><a href="#" data-toggle="modal" data-target="#getCompanyContactWay">联系方式</a></span>
+						</article>
+					</section>
+					<section>
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#fullCompanyInfo">完善企业档案</button>
+					</section>
+				</section>
+
+				<!-- leftside about company end-->
+				
+				<!-- rightside advers -->
+				<section>
+					<article>
+						<article><a href="#">编辑公开档案</a></article>
+						<i class="iconfont icon-wenhao"></i>
+					</article>
+					<article>
+						<article><a href="#">用其他语言创建职业档案</a></article>
+						<i class="iconfont icon-wenhao"></i>
+					</article>
+					<section>
+						<img src="img/jb_advers.jpg">
+					</section>
+					
+				</section>
+				<!-- rightside advers end -->
+			</section>
+
+		</section>
+		
+		<!-- 发布职位 -->
+		<section id="aboutResume">
+			<section class="aboutResume">
+				<section>
+					<!-- <img src="img/resume_todo.png"/> -->
+					<article>
+							<article>一键发布职位，快速招贤纳士</article>
+							<article>坐享更多的人才福利</article>
+							<article><button type="button" class="btn btn_resume" data-toggle="modal" data-target="#pushPosition">发布职位</button></article>
+					</article>
+				</section>
+			</section>
+		</section>
+		
+		
+		<!-- 我收到的简历 -->
+		<section class="myContentBG">
+			<section class="myContent">
+				<section>
+					<section id="myResume_icon">
+						<article>我收到的简历</article>
+						<i class="iconfont icon-down"></i>
+					</section>
+					<section class="none_mycontent none_myresume">
+						<article><img src="img/none_resume.svg"/></article>
+						<article>简历内容</article>
+						<article>您简历的内容将在这里显示</article>
+					</section>
+				</section>
+			</section>
+		</section>
+
+		<!-- 我发布的职位 -->
+		<section class="myContentBG">
+			<section class="myContent">
+				<section>
+					<section id="myCollect_icon">
+						<article>我发布职位</article>
+						<i class="iconfont icon-down"></i>
+					</section>
+					<section class="none_mycontent none_myPushPositon">
+						<article><img src="img/none_collect.svg"/></article>
+						<article>我的职位</article>
+						<article>您发布的职位将在这里显示</article>
+					</section>
+				</section>
+			</section>
+		</section>
+
+		<!--	模态框1 完善企业信息	-->
+		<div class="modal fade " id="fullCompanyInfo" tabindex="-1" role="dialog" aria-labelledby="addCompanyImgTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content" id="companyForm">
+
+				</div>
+			</div>
+		</div>
+		<!--	模态框2 取得联系方式	-->
+		<div class="modal fade " id="getCompanyContactWay" tabindex="-1" role="dialog" aria-labelledby="getCompanyContactWayTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content" id="companyContactWay">
+
+				</div>
+			</div>
+		</div>
+		<!--	模态框3：添加企业照片 -->
+		<div class="modal fade" id="addCompanyImage" tabindex="-1" role="dialog" aria-labelledby="addMeImageTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content" id="uploadCompanyImg" >
+
+				</div>
+			</div>
+		</div>
+		<!--	模态框4：添加企业照片 -->
+		<div class="modal fade" id="pushPosition" tabindex="-1" role="dialog" aria-labelledby="pushPositionTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content" id="pushPositionForm" >
+
+				</div>
+			</div>
+		</div>
+		
+		<!-- footer -->
+		<footer>
+			<section><span>Job</span>Seek</section>
+			<section>
+				<section class="jb_footer_list">
+					<ul>
+						<li><a href="#">关于</a></li>
+						<li><a href="#">招聘专版</a></li>
+						<li><a href="#">广告发布</a></li>
+						<li><a href="#">小型企业</a></li>
+					</ul>
+					<ul>
+						<li><a href="#">征才解决方案</a></li>
+						<li><a href="#">营销解决方案</a></li>
+						<li><a href="#">销售解决方案</a></li>
+						<li><a href="#">安全中心</a></li>
+					</ul>
+					<ul>
+						<li><a href="#">社区准则</a></li>
+						<li><a href="#">隐私政策和条款<i class="iconfont icon-icon-test"></i></a></li>
+						<li><a href="#">移动app</a></li>
+					</ul>
+					<ul>
+						<li>
+							<i class="iconfont icon-wenhao"></i><a href="#">需要咨询?</a>
+							<div>欢迎访问帮助中心</div>
+						</li>
+						<li>
+							<i class="iconfont icon-chilun"></i><a href="#">管理账号和隐私</a>
+							<div>前往设置</div>
+						</li>
+					</ul>												  
+				</section>
+				<section>
+						<section>选择语言</section>
+						<section>
+							<div class="btn-group">
+								<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									简体中文（简体中文）
+								</button>
+								<div class="dropdown-menu dropdown-menu-right">
+									<button class="dropdown-item" type="button">简体中文（简体中文）</button>
+								</div>
+							</div>
+						</section>
+				</section>		
+			</section>
+			<section>
+				JobSeek Alpha Version&emsp;&emsp;©2020 年
+			</section>
+		</footer>
+
+
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/cookie-with-js.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script>
+			$(function(){
+				//初始化表单
+				InitCompanyPageInfo();
+				$("#companyForm").load("company/companyForm");
+				$("#companyContactWay").load("company/companyContactWay");
+				$("#uploadCompanyImg").load("company/uploadCompanyImg");
+				$("#pushPositionForm").load("company/pushPositionForm");
+				// company function display more link
+				$("#function_icon").on('click','i', displaycompanyFunctionUI);
+				//myCollect 下拉 icon
+				$("#myCollect_icon").on('click','i',displayMyCollectUI);
+				//myResume 下拉 icon
+				$("#myResume_icon").on('click','i',displayMyResumeUI);
+			});
+
+			//company_function display more link
+			function displaycompanyFunctionUI(){
+				if($(this).hasClass("icon-down")){
+					$("#function_icon").prev().css("visibility","hidden");
+					//bigger background&display others
+					$(".company_function").css("height","250px");
+					$("#click_bigger").css("font-size","20px");
+					$("#bigger_company_function").css("display","block");
+					//change icon
+					$("#function_icon").children().removeClass("icon-down").addClass("icon-top-line");
+				}else if($(this).hasClass("icon-top-line")){
+					$("#function_icon").prev().css("visibility","visible");
+					$(".company_function").css("height","60px");
+					$("#click_bigger").css("font-size","16px");
+					$("#bigger_company_function").css("display","none");
+					//change icon
+					$("#function_icon").children().removeClass("icon-top-line").addClass("icon-down");
+				}
+			}
+			//myCollect 下拉 icon
+			function displayMyCollectUI(){
+				if($(this).hasClass("icon-down")){
+					//hidden none-mycollect block
+					$(".none_myPushPositon").hide();
+					//change icon myCollect_icon
+					$("#myCollect_icon").children("i").removeClass("icon-down").addClass("icon-top-line");
+				}else if($(this).hasClass("icon-top-line")){
+					//hidden none-mycollect block
+					$(".none_myPushPositon").show();
+					//change icon myCollect_icon
+					$("#myCollect_icon").children("i").removeClass("icon-top-line").addClass("icon-down");
+				}
+			}
+			//myResume 下拉 icon
+			function displayMyResumeUI(){
+				if($(this).hasClass("icon-down")){
+					//hidden none-myresume block
+					$(".none_myresume").hide();
+					//change icon myResume_icon
+					$("#myResume_icon").children("i").removeClass("icon-down").addClass("icon-top-line");
+				}else if($(this).hasClass("icon-top-line")){
+					//hidden none-myresume block
+					$(".none_myresume").show();
+					//change icon myResume_icon
+					$("#myResume_icon").children("i").removeClass("icon-top-line").addClass("icon-down");
+				}
+			}
+			//初始化企业信息
+			function InitCompanyPageInfo() {
+				var _token = $.cookie("JB_TOKEN");
+				if (!_token){
+					alert("初始化信息失败,请重新登陆");
+					location.href="job";
+				}
+				$.ajax({
+					url:"http://sso.jb.com/company/query/"+_token,
+					dataType:"jsonp",
+					type:"GET",
+					success : function (result) {
+						if (result.code == 200){
+							if (result.data.roleId!=3){
+								alert("您的身份不是企业");
+								location.href="job";
+							}
+							if (result.data ==  null){
+								alert("系统错误，请重新登录")
+							}
+							//把json串转化为js对象
+							let _jsCompanyData = JSON.parse(result.data.company);
+							let _jsPositonItemData = JSON.parse(result.data.position);
+							// console.log(_jsPositonItemData);
+							//增加logout按钮
+							$("#logout").show();
+							//绑定company-id
+							$("#logout").data("compId",_jsCompanyData.id);
+							//回显 企业名称
+							$(".companyName").empty().html(_jsCompanyData.companyName);
+							//回显 企业所在地
+							$(".companyScale").empty().html(_jsCompanyData.scale);
+							//回显 企业规模
+							$(".location").empty().html(_jsCompanyData.location);
+							//回显 照片
+							if (_jsCompanyData.avatar!=null) {
+								$(".avatar").empty().css("background","url("+_jsCompanyData.avatar+") no-repeat ");
+							}
+							//回显发布的职位
+							if (!_jsPositonItemData) {
+								$(".none_myPushPositon").children("article").show();
+							}else {
+								$(".none_myPushPositon").children("article").hide();
+								let pitem = "";
+								_jsPositonItemData.forEach((position)=>{
+									let isCheck = position.checkStatus==true?"已审核":"未审核";
+									pitem += "<div style='width: 90%;height: 30px;margin:10px;background-color: #FFF;border-radius: 10px;display: flex;justify-content: space-around;cursor: pointer'  data-pid='"+position.id+"' id='pId"+position.id+"'><span>"+position.pubName+"</span><span>"+position.positionName+"</span><span>"+position.address+"</span><span>"+position.companyName+"</span><a class='btn btn-outline-info' onclick='doDeletePosition(this)'>删除</a><a class='btn btn-success text-warning ' onclick='doCheckPosition(this)'>查看("+isCheck+")</a></span></div>";
+							});
+								$(".none_myPushPositon").html(pitem);
+							}
+						}
+					}
+				})
+
+			}
+			//查看职位
+			function doCheckPosition(obj) {
+				let positionId = $(obj).parent().data("pid");
+				window.open("jobDetail?pid="+positionId+"&r="+Math.random());
+			}
+
+			//删除职位
+			function doDeletePosition(obj) {
+				//获取职位id
+				let positionId = $(obj).parent().data("pid");
+				if(!confirm("确定删除么"))return;
+				//异步删除
+				let param = {positionId : positionId};
+				$.post("job/deleteOnejob",param,function (result) {
+					if (result.code==200){
+						alert(result.message);
+						location.href="company";
+					} else {
+						alert(result.message)
+					}
+				})
+
+			}
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+
+	</body>
+</html>

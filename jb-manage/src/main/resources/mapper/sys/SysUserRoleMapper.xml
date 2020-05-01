@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jobseek.mapper.SysUserRoleMapper">
+
+    <insert id="insertObject" parameterType="cn.jobseek.pojo.UserRole"
+        keyProperty="id" useGeneratedKeys="true"
+    >
+        insert into jb_user_role
+        (user_id,role_id,created_time,modified_time,created_user)
+        values
+        (#{userId},#{roleId},#{createdTime},#{modifiedTime},#{createdUser})
+    </insert>
+
+
+    <update id="updateObjectAfterDelete">
+        update jb_user_role set role_id = null
+        where 1=2
+        <if test="roleId != null ">
+            or id in (select temp.id from
+            (select id from jb_user_role where role_id = #{roleId}) as temp)
+        </if>
+    </update>
+
+    <delete id="deleteObjectByUserId">
+        delete from jb_user_role
+        where 1=2
+        <if test="userId !=null">
+            or user_id =#{userId}
+        </if>
+    </delete>
+</mapper>

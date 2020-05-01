@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>register</title>
+		<link rel="shortcut icon" href="#" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+		 crossorigin="anonymous">
+		<link rel="stylesheet" href="css/nav.css" />
+		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" media="screen">
+		<link rel="stylesheet" href="css/reg_emp.css">
+
+	</head>
+	<style>
+		body,ul,li{
+			padding: 0px;
+			margin: 0px;
+			list-style: none;
+		}
+		/* pageTilte style start */
+		.pageTilte{
+			color: #fff;
+			margin: 5px;
+		}
+		/* pageTilte styele end */
+		body{
+			width: 100%;
+			height: 100%;
+			background: #0a859c;
+		}
+		/* roleAsure style start*/
+		#roleAsure{
+			margin-top: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px #ccc;
+		}
+		#roleAsure>section{
+			background-color: #fff;
+			height:100px;
+		}
+
+		#roleAsure>section>section{
+			padding:25px;
+			color: #005e93;
+
+		}
+		#roleAsure>section>section:first-child{
+			border-right: 2px solid #ccc;
+		}
+		#roleAsure>section>section:hover{
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			box-shadow: 0px 0px 15px #ccc;
+			background-color: #0a859c;
+			color: #fff;
+			transform: scale(1.2);
+			cursor: pointer;
+			z-index: 10;
+		}
+		#roleAsure>section>section>article{
+			/* border: 1px solid red; */
+			text-align: center;
+			font-size: 1.5em;
+		}
+		/* roleAsure style end*/
+		#register_content{
+			margin-bottom: 80px;
+		}
+		.register_content{
+			width: 60%;
+			margin: 0px auto;
+			margin-top: 20px;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		.register_content>article{
+			margin: 0px auto;
+			text-align: center;
+		}
+		.register_content>article:last-child{
+			font-size: 1.25em;
+			color: #005e93;
+			margin-bottom: 20px;
+		}
+
+		/* register_content style end */
+		/* form style end */
+		/* footer style start */
+		footer{
+			width: 100%;
+			height: 35px;
+			position:fixed;
+			bottom: 0px;
+			/* border: 1px solid red; */
+			background: #fff;
+			box-shadow: 0px 0px 5px #ccc;
+		}
+		footer>nav{
+			width: 1200px;
+			margin: 0px auto;
+		}
+		footer>nav>ul{
+			display: flex;
+			justify-content: space-around;
+		}
+		
+		
+		footer>nav>ul>li>span:first-child,
+		footer>nav>ul>li>span:nth-child(2),
+		footer>nav>ul>li>a{
+			line-height: 35px;
+			font-size: 14px;
+		}
+		footer>nav>ul>li>span:first-child,
+		footer>nav>ul>li>span:nth-child(2){
+			color: #000;
+			font-family: "微软雅黑";
+		}
+		footer>nav>ul>li>span:first-child>span{
+			background-color: #0a859c;
+			padding: 2px 3px;
+			border-radius: 5px ;
+			color: #fff;
+			font-weight: bold;
+		}
+		footer>nav>ul>li>a{
+			/* border: 1px solid red; */
+			color: #0A859C;
+			text-decoration: none;
+		}
+	</style>
+	<body>
+		<!--header-->
+		<header>
+			<nav class="navbar navbar-default ">
+				<div class="container-fluid">
+					<section class="row ">
+						<!-- Job觅职 标题头 -->
+						<section class="col-lg-2 col-md-3 col-sm-4 ">
+							<div class="navbar-header">
+								<span>Job</span>觅职
+							</div>
+						</section>
+						<!-- 注册登录页 -->
+						<section class="col-lg-4 col-md-3 col-sm-6 ">
+							<h4 class="text-center pageTilte">注册页面</h4>
+						</section>
+						<!-- 主页 注册/登录 我 -->
+						<section class="col-lg-6 col-md-6 col-sm-2">
+							<ul class="nav jb_nav">
+								<li class="nav-item">
+									<a class="nav-link active" href="job.html">主页</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="signup.html">登录</a>
+								</li>
+								<li class="nav-item">
+									<!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+									<a class="nav-link" href="me.html">我</a>
+								</li>
+								<li class="nav-item">
+									<!-- <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+									<a class="nav-link" href="company.html">企业</a>
+								</li>
+								<li class="nav-item dropdown more_job_nav">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+									 aria-haspopup="true" aria-expanded="false">
+										<i class="iconfont icon-gengduo"></i>
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+										<a class="dropdown-item" href="job.html">主页</a>
+										<a class="dropdown-item" href="signup.html">登录</a>
+										<a class="dropdown-item" href="me.html">我</a>
+										<a class="dropdown-item" href="company.html">企业</a>
+									</div>
+								</li>
+							</ul>
+						</section>
+					</section>
+				</div>
+			</nav>
+		</header>
+
+
+		<!-- fill_nav -->
+		<div class="fill_nav"></div>
+
+		<!-- 我是求职者/我是企业 -->
+		<section class="container" id="roleAsure">
+			<section class="row">
+				<section class="col-6 "><article id="employee-sure">我是求职者</article></section>
+				<section class="col-6 "><article id="company-sure">我是企业</article></section>
+			</section>
+
+		</section>
+		
+		<!-- register-content -->
+		<section id="register_content">
+			<section class="register_content">
+					<article><img src="img/none-role.svg"/></article>
+					<article>请选择您的身份！</article>
+			</section>
+		</section>
+
+		<!-- 底部区域 -->
+		<footer>
+			<nav>
+				<ul>
+					<li><span><span>Job</span>seek&nbsp;©2020</span></li>
+					<li><span>Alpha</span></li>
+					<li><a href="job.html">主页</a></li>
+					<li><a href="#">关于</a></li>
+					<li><a href="#">用户协议</a></li>
+					<li><a href="#">隐私政策</a></li>
+					<li><a href="#">Cookie政策</a></li>
+				<li><a href=" #">版权政策</a></li>
+					<li><a href="#">语言<i></i></a></li>
+				</ul>
+			</nav>
+		</footer>
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/cookie-with-js.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		 crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+		<script>
+		$(function(){
+			doLoadUI("employee-sure","register/register_employee");
+			doLoadUI("company-sure","register/register_company");
+
+		});
+		//加载对应的表单UI
+		function doLoadUI(id,url){
+			$("#"+id).click(function(){
+				$(".register_content").empty();
+				if (id=="employee-sure"){
+					$("#register_content").data("roleId","2");	//求职者role_id 2
+				}else if(id=="company-sure"){
+					$("#register_content").data("roleId","3");	//企业role_id 3
+				}
+				$(".register_content").load(url);
+			});
+
+		}
+		</script>
+	</body>
+</html>

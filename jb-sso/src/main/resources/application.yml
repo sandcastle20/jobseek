@@ -1,0 +1,38 @@
+#server
+server:
+  port: 8093
+  sevlet:
+    context-path: /
+  tomcat:
+    uri-encoding: utf8
+    max-thread: 1000
+    min-spare-threads: 100
+#spring
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-bp1por7x2te03wa807o.mysql.rds.aliyuncs.com:3306/jobseek?serverTimezone=GMT%2B8&characterEncoding=utf8
+    username: sandcastle
+    password: scq08123xe@
+#mybatis
+mybatis:
+  configuration:
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+  mapper-locations:
+    - classpath:/mapper/*/*.xml
+#LOG
+logging:
+  level:
+    cn.jobseek: DEBUG
+#dubbo
+dubbo:
+  scan:     #让dubbo注解起作用
+    basePackages: cn.jobseek #指定包路径
+  application:
+    name: sso-jobseek  #业务标识 自己定义的
+  registry:
+    address: zookeeper://101.37.21.246:2181?backup=101.37.21.246:2182,101.37.21.246:2183
+  protocol: #rpc调用 指定协议规则
+    name: dubbo #dubbo的内部默认实现
+    port: 20880 #每一个服务都应该有各自对应的端口
